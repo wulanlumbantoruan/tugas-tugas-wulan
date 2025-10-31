@@ -1,6 +1,6 @@
 ---
 title: "Latihan Mandiri Modul 6"
-author: "Wulan Lumbantoruan"
+author: "Wulan"
 date: "2024-10-28"
 output: pdf_document
 ---
@@ -318,3 +318,4 @@ if (F_value < F_critical_low || F_value > F_critical_high) {
 }
 
 ```
+
