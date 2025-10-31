@@ -1,6 +1,6 @@
 ---
 title: "Statistika Non Parametrik"
-author: "Wulan Lumbantoruan"
+author: "Wulan"
 date: "2024-11-10"
 output: html_document
 ---
@@ -85,3 +85,4 @@ bartlett.test(Petal.Length ~ Species, data = iris)
 ```{r}
 install.packages("nortest", repos = "https://cran.r-project.org")
 ```
+
