@@ -1,0 +1,320 @@
+---
+title: "Latihan Mandiri Modul 6"
+author: "Wulan Lumbantoruan"
+date: "2024-10-28"
+output: pdf_document
+---
+
+# Pengujian Hipotesis
+
+# Uji hipotesis untuk rata-rata 1 populasi
+
+## standar deviasi diketahui
+
+```{r}
+# Langkah 1: Merumuskan Hipotesis
+# H0; mean == 500 (rata-rata umur baterai sama dengan 500 jam)
+# H1; mean != 500 (rata-rata baterai tidak sama dengan 500 jam)
+
+# Data sampel umur baterai (dalam jam)
+data <- c(480, 505, 520, 495, 510, 485, 500, 515, 490, 505)
+
+# Nilai rata-rata populasi yang dihipotesiskan (klaim perusahaan)
+mu_h0 <- 500 # Rata-rata populasi (nilai H0)
+sigma <- 20 # Standar deviasi populasi (diketahui)
+alpha <- 0.05 # Taraf nyata pengujian
+
+# Langkah 2: Menghitung Statistik uji 2
+n <- length(data) # Ukuran sampel
+x_bar <- mean(data) # Rata-rata sampel
+se <- sigma / sqrt(n) # Standar error (SE) menggunakan standar deviasi populasi
+
+z_stat <- (x_bar - mu_h0) / se # Statistik uji z
+
+# Langkah 3: Menentukan daerah kritis
+z_critical <- qnorm(1 - alpha/2) # Nilai kritis z untuk uji dua arah
+
+# Langkah 4: Tentukan kriteria uji
+cat("Statistik uji z:", z_stat, "\n")
+
+cat("Nilai kritis z:", z_critical, "\n")
+
+# Langkah 5: Tentukan kesimpulan
+if (abs(z_stat) > z_critical){
+  cat("Tolak H0: Ada cukup bukti untuk mendukung H1 (rata-rata umur baterai tidak sama dengan", mu_h0, "\n")
+ } else {
+    cat("Gagal Tolak H0: Tidak ada cukup bukti untuk menolak H0 {rata-rata umur baterai sama dengan", mu_h0, "\n")
+  }
+
+# Tambahan: Output p-value
+p_value <- 2 * (1 - pnorm(abs(z_stat))) # Dua kali untuk uji dua arah
+cat("p-value", p_value, "\n")
+```
+
+## standar deviasi tidak diketahui
+
+```{r}
+# Langkah 1: Merumuskan Hipotesis
+# H0; mean == 350 (rata-rata isi botol sama dengan 350 ml)
+# H1: mean != 350 (rata-rata isi boto; tidak sama dengan 350 ml)
+
+# Data sampel isi botol (dalam ml)
+data <- c(348, 351, 349, 352, 347, 350, 349, 351, 348, 350, 352, 351)
+
+# Nilai rata-rata populasi yang dihipotesiskan (kalim perusahaan)
+mu_h0 <- 350 # Rata-rata populasi (nilai H0)
+alpha <- 0.05 # Taraf nyata pengujian
+
+# Langkah 2: Menghitung statistika uji t
+n <- length(data) # Ukuran sampel
+x_bar <- mean(data) # Rata-rata sampel
+s <- sd(data) # Standar deviasi sampel (karena varian populasi tidak diketahui)
+se <- s / sqrt(n) # Standar error
+
+t_stat <- (x_bar - mu_h0) / se # Statistik uji t
+
+# Langkah 3: Menentukan daerah kritis
+t_critical <- qt(1-alpha/2, df = n-1) # Nilai kritis t untuk uji dua arah
+
+# Langkah 4: Tentukan kriteria uji
+cat("Statistik Uji t:", t_stat, "\n")
+cat("Nilai kritis t:", t_critical, "\n")
+
+# Langkah 5: Tentukan kesimpulan
+if (abs(t_stat) > t_critical) {
+  cat("Tolak H0: Ada cukup bukti untuk mendukung H1 (rata-rata isi botol tidak sama dengan", mu_h0, "\n")
+} else {
+  cat("Gagal Tolak H0: Tidak ada cukup bukti untuk menolak H0 (rata-rata isi botol sama dengan", mu_h0, "ml)\n")
+}
+
+# Tambahkan Output p-value
+p_value <- 2*(1 - pt(abs(t_stat), df = n-1)) # Dua kali untuk uji dua arah 
+cat("p_value:", p_value, "\n") 
+```
+
+# Uji hipotesis untuk rata-rata 2 populasi
+
+## saling bebas dan jika standar deviasi diketahui
+
+```{r}
+# Langkah 1: Data yang diketahui
+x1 <- 85   # Rata-rata keausan bahan 1
+x2 <- 81   # Rata-rata keausan bahan 2
+s1 <- 4    # Standar deviasi sampel bahan 1
+s2 <- 5    # Standar deviasi sampel bahan 2
+n1 <- 12   # Ukuran sampel bahan 1
+n2 <- 10   # Ukuran sampel bahan 2
+mu_diff <- 2  # Selisih yang dihipotesiskan (2 unit)
+alpha <- 0.05 # Taraf signifikansi
+
+# Langkah 2: Menghitung varians gabungan (Sp^2)
+Sp2 <- ((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 - 2)
+
+# Menghitung standar error gabungan (SE)
+SE <- sqrt(Sp2 * (1/n1 + 1/n2))
+
+# Langkah 3: Menghitung statistik uji t
+t_stat <- (x1 - x2 - mu_diff) / SE
+
+# Langkah 4: Menentukan nilai kritis t
+t_critical <- qt(1 - alpha, df = n1 + n2 - 2)  # Uji satu arah
+
+# Langkah 5: Menentukan kriteria uji
+cat("Statistik Uji t:", t_stat, "\n")
+cat("Nilai Kritis t:", t_critical, "\n")
+
+# Langkah 6: Kesimpulan
+if (t_stat > t_critical) {
+  cat("Tolak H0: Ada cukup bukti bahwa keausan bahan 1 melebihi bahan 2 lebih dari 2 unit\n")
+} else {
+  cat("Gagal Tolak H0: Tidak ada cukup bukti untuk menyimpulkan bahwa keausan bahan 1 melebihi bahan 2 lebih dari 2 unit\n")
+}
+
+# Tambahan: Output p-value
+p_value <- 1 - pt(t_stat, df = n1 + n2 - 2)
+cat("p-value:", p_value, "\n")
+
+```
+
+## data perpasangan
+
+```{r}
+# Data: Kadar androgen (ng/mL) saat injeksi dan setelah 30 menit injeksi
+androgen_before <- c(2.76, 5.18, 2.68, 3.05, 4.10, 7.05, 6.60, 4.89, 7.39, 11.78, 11.10, 3.38, 26.00, 67.48, 17.04)
+androgen_after <- c(7.02, 3.10, 5.44, 3.99, 5.21, 10.26, 19.31, 18.63, 7.91, 11.10, 11.78, 3.00, 59.08, 41.93, 41.70)
+
+# Menghitung perbedaan kadar androgen (setelah - sebelum)
+diff <- androgen_after - androgen_before
+
+# Langkah 1: Uji hipotesis menggunakan Paired Sample t-Test
+t_test_result <- t.test(androgen_after, androgen_before, paired = TRUE, alternative = "two.sided")
+
+# Output hasil uji
+print(t_test_result)
+
+# Langkah 2: Menyimpulkan hasil
+if (t_test_result$p.value < 0.05) {
+  cat("Tolak H0: Ada perbedaan signifikan dalam kadar androgen setelah 30 menit\n")
+} else {
+  cat("Gagal Tolak H0: Tidak ada perbedaan signifikan dalam kadar androgen setelah 30 menit\n")
+}
+
+```
+
+# Uji hipotesis untuk proporsi 1 populasi
+
+```{r}
+# Data sampel
+n <- 200                  # Ukuran sampel
+x <- 120                  # Jumlah pelanggan yang puas
+p_hat <- x / n            # Proporsi sampel
+
+# Hipotesis nol
+p_0 <- 0.60               # Proporsi populasi dari hipotesis nol
+
+# Menghitung statistik uji Z
+z_value <- (p_hat - p_0) / sqrt((p_0 * (1 - p_0)) / n)
+
+# Menentukan tingkat signifikansi
+alpha <- 0.05
+
+# Menentukan nilai kritis untuk uji dua arah
+z_critical <- qnorm(1 - alpha / 2)
+
+# Menghitung p-value
+p_value <- 2 * (1 - pnorm(abs(z_value)))
+
+# Menampilkan hasil
+cat("Statistik uji Z:", z_value, "\n")
+cat("Nilai kritis Z:", z_critical, "\n")
+cat("P-Value:", p_value, "\n")
+
+# Keputusan uji hipotesis
+if (abs(z_value) > z_critical) {
+  cat("Tolak hipotesis nol (H0). Ada bukti bahwa proporsi tidak sama dengan 0.60.\n")
+} else {
+  cat("Gagal menolak hipotesis nol (H0). Tidak ada bukti bahwa proporsi berbeda dari 0.60.\n")
+}
+
+```
+
+# Uji hipotesis untuk proporsi 2 populasi
+
+```{r}
+# Data sampel
+n1 <- 300           # Ukuran sampel pria
+x1 <- 180           # Jumlah pria yang puas
+p1 <- x1 / n1       # Proporsi pria yang puas
+n2 <- 350           # Ukuran sampel wanita
+x2 <- 210           # Jumlah wanita yang puas
+p2 <- x2 / n2       # Proporsi wanita yang puas
+
+# Proporsi gabungan dari kedua populasi
+p_combined <- (x1 + x2) / (n1 + n2)
+
+# Menghitung statistik uji Z
+z_value <- (p1 - p2) / sqrt(p_combined * (1 - p_combined) * (1/n1 + 1/n2))
+
+# Menentukan tingkat signifikansi
+alpha <- 0.05
+
+# Menentukan nilai kritis untuk uji dua arah
+z_critical <- qnorm(1 - alpha / 2)
+
+# Menghitung p-value
+p_value <- 2 * (1 - pnorm(abs(z_value)))
+
+# Menampilkan hasil
+cat("Proporsi pria yang puas:", p1, "\n")
+cat("Proporsi wanita yang puas:", p2, "\n")
+cat("Statistik uji Z:", z_value, "\n")
+cat("Nilai kritis Z:", z_critical, "\n")
+cat("P-Value:", p_value, "\n")
+
+# Keputusan uji hipotesis
+if (abs(z_value) > z_critical) {
+  cat("Tolak hipotesis nol (H0). Ada bukti bahwa proporsi kepuasan pria dan wanita berbeda secara signifikan.\n")
+} else {
+  cat("Gagal menolak hipotesis nol (H0). Tidak ada bukti bahwa proporsi kepuasan pria dan wanita berbeda secara signifikan.\n")
+}
+
+```
+
+# Uji hipotesis untuk ragam 1 populasi
+
+```{r}
+# Data
+n <- 30                # Ukuran sampel
+s2 <- 36               # Varians sampel
+sigma0_2 <- 25         # Varians populasi yang diuji (hipotesis nol)
+
+# Menghitung statistik uji Chi-square
+chi_square <- (n - 1) * s2 / sigma0_2
+
+# Menentukan tingkat signifikansi
+alpha <- 0.05
+
+# Menentukan derajat kebebasan
+df <- n - 1
+
+# Menentukan nilai kritis chi-square untuk uji dua arah
+chi_critical_low <- qchisq(alpha / 2, df)
+chi_critical_high <- qchisq(1 - alpha / 2, df)
+
+# Menghitung p-value
+p_value <- 2 * min(pchisq(chi_square, df), 1 - pchisq(chi_square, df))
+
+# Menampilkan hasil
+cat("Statistik uji Chi-square:", chi_square, "\n")
+cat("Nilai kritis Chi-square rendah:", chi_critical_low, "\n")
+cat("Nilai kritis Chi-square tinggi:", chi_critical_high, "\n")
+cat("P-Value:", p_value, "\n")
+
+# Keputusan uji hipotesis
+if (chi_square < chi_critical_low || chi_square > chi_critical_high){
+  cat("Tolak hipotesis nol (h0). Ada bukti bahwa varians populasi berbeda dari 25. \n")
+} else {
+  cat("Gagal menolak hipotesis nol (H0). Tidak ada bukti bahwa varians populasi berbeda dari 25. \n")
+}
+```
+
+# Uji hipotesis untuk ragam 2 populasi
+
+```{r}
+# Data
+s1_sq <- 16  # Varians kelas 1 (simpangan baku 4)
+s2_sq <- 25  # Varians kelas 2 (simpangan baku 5)
+n1 <- 12     # Ukuran sampel kelas 1
+n2 <- 10     # Ukuran sampel kelas 2
+
+# Menghitung statistik uji F
+F_value <- s1_sq / s2_sq
+
+# Menentukan tingkat signifikansi
+alpha <- 0.10
+
+# Menghitung derajat kebebasan
+df1 <- n1 - 1
+df2 <- n2 - 1
+
+# Nilai kritis F untuk uji dua arah
+F_critical_low <- qf(alpha / 2, df1, df2)
+F_critical_high <- qf(1 - alpha / 2, df1, df2)
+
+# Menghitung p-value
+p_value <- 2 * min(pf(F_value, df1, df2), 1 - pf(F_value, df1, df2))
+
+# Menampilkan hasil
+cat("Statistik uji F:", F_value, "\n")
+cat("Nilai kritis F rendah:", F_critical_low, "\n")
+cat("Nilai kritis F tinggi:", F_critical_high, "\n")
+cat("P-Value:", p_value, "\n")
+
+# Keputusan uji hipotesis
+if (F_value < F_critical_low || F_value > F_critical_high) {
+  cat("Tolak hipotesis nol (H0). Ada bukti bahwa varians kedua metode berbeda.\n")
+} else {
+  cat("Gagal menolak hipotesis nol (H0). Tidak ada bukti bahwa varians kedua metode berbeda.\n")
+}
+
+```

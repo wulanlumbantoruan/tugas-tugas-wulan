@@ -1,0 +1,75 @@
+---
+title: "Modul 2 ADS"
+author: "Wulan Lumbantoruan"
+date: "2024-09-09"
+output: pdf_document
+---
+
+# 
+
+```{r}
+library(readr)
+data_sales <- read_csv("C:/Users/mm1-33/Downloads/Sales_Records.csv")
+head(data_sales)
+```
+
+```{r}
+summary(data_sales)
+```
+
+```{r}
+str(data_sales)
+```
+
+```{r}
+mean(data_sales$`Total Profit`)
+```
+
+```{r}
+median(data_sales$`Total Profit`)
+```
+
+```{r}
+modus <- function(x){
+  uniqx <- unique(x)
+  uniqx [which.max(tabulate(match(x, uniqx)))]
+}
+modus (data_sales$`Total Profit`)
+```
+
+```{r}
+quantile(data_sales$`Total Profit`, probs = seq(.25, .75, by=.25))
+```
+
+```{r}
+quantile(data_sales$`Total Profit`, probs = seq(.1, .9, by=.1))
+```
+
+```{r}
+quantile(data_sales$`Total Profit`, probs = seq(.01, .99, by=.01))
+```
+
+```{r}
+max(data_sales$`Total Profit`) -min(data_sales$`Total Profit`)
+```
+
+```{r}
+mean(data_sales$`Total Profit`-mean (data_sales$`Total Profit`))
+```
+
+```{r}
+sd(data_sales$`Total Profit`)
+```
+
+```{r}
+library(moments)
+```
+
+```{r}
+skewness(data_sales$`Total Profit`)
+```
+
+```{r}
+library(moments)
+kurtosis(data_sales$`Total Profit`)
+```

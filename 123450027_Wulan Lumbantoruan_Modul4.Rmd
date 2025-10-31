@@ -1,0 +1,108 @@
+---
+title: "Latihan Modul 4"
+author: "Wulan Lumbantoruan"
+date: "2024-09-30"
+output: html_document
+---
+
+```{r}
+# Parameter distribusi weibull
+lamda <- 500 # skala
+k <- 1.5
+
+# 1. Probabilitas baterai bertahan lebih dari 600 jam
+prob_more_than_600 <- 1 - pweibull(600, shape = k, scale = lamda)
+cat("Probabilitas baterai bertahan lebih dari 600 jam:,", prob_more_than_600, "\n")
+
+# 2. Probabilitas baterai bertahan antara 300 hingga 700 jam
+prob_between_300_and_700 <- pweibull(700, shape = k, scale = lamda) - pweibull(300, shape = k, scale = lamda)
+cat("Probabilitas baterai bertahan antara 300 hingga 700 jam:", prob_between_300_and_700, "\n")
+
+# 3. Masa hidup minimum untuk 10% baterai terlama
+lifetime_top_10_percent <- qweibull(0.9, shape = k, scale = lamda)
+cat("Masa hidup minimum untuk 10% baterai terlama:", lifetime_top_10_percent, "jam\n")
+```
+
+```{r}
+# Parameter distribusi normal
+mean_height <- 170 # rata-rata tinggi dalam cm
+sd_height <- 10 # standar deviasi tinggi dalam cm
+
+# 1. Probabilitas mahasiswwa memiliki tinggi badan kurang dari 160 cm
+prob_less_than_160 <- pnorm(160, mean = mean_height, sd = sd_height)
+cat("Probabilitas tinggi badan kurang dari 160 cm:", prob_less_than_160, "\n")
+
+# 2. Probabilitas mahasiswa memiliki tinggi badan antara 165 cm hingga 180 cm
+prob_betwen_165_and_180 <- pnorm(180, mean = mean_height, sd = sd_height) - pnorm(165, mean = mean_height, sd = sd_height)
+cat("Probabilitas tinggi badan antara 165 cm hingga 180 cm:", prob_betwen_165_and_180, "\n")
+
+# 3. Tinggi minimum untuk 5% mahasiswa tertinggi
+height_top_5_percent <- qnorm(0.995, mean = mean_height, sd = sd_height)
+cat("Tinggi minimum untuk 5% mahasiswa tertinggi:", height_top_5_percent, "cm\n")
+```
+
+```{r}
+# Parameter distribusi eksponensial
+mean_weating_time <- 5 # rata-rata waktu tunggu dalam menit
+lamda <-1 / mean_weating_time #lamda=1/rata-rata
+
+# 1. Probabilitas pelanggan menunggu kurang dari 3 menit
+prob_less_than_3 <- pexp(3, rate = lamda)
+cat("Ptobabilitas menunggu kurang dari 3 menit:", prob_less_than_3, "\n")
+
+# 2. Probabilitas pelanggan menunggu antara 4 hingga 6 menit
+prob_between_4_adn_6 <- pexp(6, rate = lamda) - pexp(4, rate = lamda)
+cat("Probabilitas menunggu antara 4 hingga 6 menit:", prob_between_4_adn_6, "\n")
+
+# 3. Waktu tunggu maksimum untuk 20% pelanggan terlama
+waiting_time_top_20_percent <- qexp(0.8, rate = lamda)
+cat("Waktu tunggu maksimum untuk 20% pelanggan terlama:", waiting_time_top_20_percent, "menit\n")
+```
+
+```{r}
+1 - pgamma(5, shape = 2, scale = 3)
+```
+
+```{r}
+pgamma(6, shape = 2, scale =3) - pgamma(4, shape = 2, scale = 3)
+```
+
+```{r}
+qgamma(0.9, shape = 2, scale = 3)
+```
+
+```{r}
+1 - pbeta(0.7, shape1 = 2, shape2 = 5)
+```
+
+```{r}
+pbeta(0.6, shape1 = 2, shape2 = 5) - pbeta(0.3, shape1 = 2, shape2 = 5)
+```
+
+```{r}
+qbeta(0.95, shape1 = 2, shape2 = 5)
+```
+
+```{r}
+1 - pchisq(9, df = 4)
+```
+
+```{r}
+pchisq(10, df = 4) - pchisq(5, df = 4)
+```
+
+```{r}
+qchisq(0.95, df = 4)
+```
+
+```{r}
+punif(12, min = 9, max = 17) - punif(10, min = 9, max = 17)
+```
+
+```{r}
+punif(11, min = 9, max = 17)
+```
+
+```{r}
+qunif(0.95, min = 9, max = 17)
+```
