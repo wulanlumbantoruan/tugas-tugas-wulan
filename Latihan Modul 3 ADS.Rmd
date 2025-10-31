@@ -1,6 +1,6 @@
 ---
 title: "Modul 3 ADS"
-author: "Wulan Lumbantoruan"
+author: "Wulan Lumbantor"
 date: "2024-09-23"
 output: html_document
 ---
@@ -193,3 +193,4 @@ ageVSgender
 ```{r}
 ageVSgender
 ```
+
