@@ -1,0 +1,195 @@
+---
+title: "Modul 3 ADS"
+author: "Wulan Lumbantoruan"
+date: "2024-09-23"
+output: html_document
+---
+
+```{r}
+library(readr)
+Food_Order <- read_csv("C:/Users/mm1-13/Downloads/Food_Order.csv")
+View(Food_Order)
+```
+
+```{r}
+foodOrder <- read.csv("C:/Users/mm1-13/Downloads/Food_Order.csv")
+str(foodOrder)
+```
+
+```{r}
+table(foodOrder$Occupation)
+```
+
+```{r}
+barplot(table(foodOrder$Occupation),
+ ylab = "Frequency",
+ xlab = "Occupation")
+```
+
+```{r}
+table(foodOrder$Family.size)
+```
+
+```{r}
+proporsi_occupation <- table(foodOrder$Occupation)
+pie(proporsi_occupation, col = c("pink", "violet", "magenta", "red"))
+```
+
+```{r}
+backgroundOrder <- table(foodOrder$Gender, foodOrder$Educational.Qualifications)
+backgroundOrder
+```
+
+```{r}
+library(ggplot2)
+ggplot(foodOrder, aes(x = Gender, fill = Educational.Qualifications)) +
+ geom_bar(position = "stack")
+
+```
+
+```{r}
+library(ggplot2)
+ggplot(foodOrder, aes(x = Gender, fill = Educational.Qualifications)) +
+ geom_bar(position = "dodge")
+
+```
+
+```{r}
+# Kode untuk membuat tabel untuk Feedback dan Gender
+genderFeedback <- table(foodOrder$Feedback, foodOrder$Gender)
+# Kode untuk membuat mosaic plot
+mosaicplot(genderFeedback, main="Feedback by Gender", color = c("deeppink"
+, "blue"))
+
+```
+
+```{r}
+df <- data.frame(
+ kelompok_usia = factor(c("15-19", "20-24", "25-29", "30-34", "35-39", "40-44
+", "45-49", "50-54"), levels = c("50-54", "45-49", "40-44", "35-39", "30-34",
+"25-29", "20-24", "15-19")),
+ sex = factor(rep(c("Laki-laki", "Perempuan"), each = 8)),
+ jumlah = c(21, 22, 39, 44, 81, 77, 103, 92, -41, -139, -198, -209, -249, -253, -235, 0))
+
+```
+
+```{r}
+ggplot(df, aes(x = kelompok_usia, y = jumlah, fill = sex)) +
+ geom_bar(stat = "identity", width = 0.9) +
+ coord_flip() +
+ scale_y_continuous(labels = abs) +
+ labs(x = "Kelompok Usia", y = "Jumlah", fill = "Jenis Kelamin",
+ title = "Jumlah Penderita Hipertensi Berdasarkan Usia dan Jenis Kelamin"
+) + theme_minimal()+
+ scale_fill_manual(values = c("blue", "deeppink"))
+```
+
+```{r}
+library(readr)
+Ice_Cream_Sales_vs_Temperature <- read_csv("C:/Users/mm1-13/Downloads/Ice Cream Sales vs Temperature.csv")
+View(Ice_Cream_Sales_vs_Temperature)
+```
+
+```{r}
+ice_sales <- read.csv("C:/Users/mm1-13/Downloads/Ice Cream Sales vs Temperature.csv")
+head(ice_sales)
+korelasiEs_Temp <- cor(ice_sales$Temperature, ice_sales$Sales)
+korelasiEs_Temp
+```
+
+```{r}
+korelasiEs_Temp
+```
+
+```{r}
+library(ggplot2)
+ggplot(ice_sales, aes(x = Temperature, y = Sales)) +
+ geom_point(color = "blue", size = 3) +
+ labs(title = "Korelasi antara Penjualan Es Krim dan Temperatur", x = "Temperatur", y
+= "Penjualan Es Krim") +
+ theme_minimal()
+```
+
+```{r}
+data_raw <- c(5, 2, 10, 20, 30, 40, 50, 200, 15)
+normalisasi_data <- (data_raw - min(data_raw)) / (max(data_raw) - min(data_raw))
+normalisasi_data
+```
+
+```{r}
+normalisasi_data
+```
+
+```{r}
+data_raw2 <- c(52, 22, 110, 290, 300, 476, 598, 290, 415)
+mean_data <- mean(data_raw2)
+sd_data <- sd(data_raw2)
+standarisasi <- (data_raw2-mean_data)/sd_data
+standarisasi
+```
+
+```{r}
+standarisasi
+```
+
+```{r}
+library(readr)
+Gender_vs_Age_Salary <- read_csv("C:/Users/mm1-13/Downloads/Gender_vs_Age_Salary.xlsx")
+View(Gender_vs_Age_Salary)
+```
+
+```{r}
+install.packages("readxl")
+library(readxl)
+ageVSgender <- read_excel("C:/Users/mm1-13/Downloads/Gender_vs_Age_Salary.xlsx")
+head(ageVSgender)
+
+```
+
+```{r}
+head(ageVSgender)
+```
+
+```{r}
+library(moments)
+skewness(ageVSgender$Salary)
+
+
+```
+
+```{r}
+skewness(ageVSgender$Salary)
+```
+
+```{r}
+hist(ageVSgender$Salary)
+
+```
+
+```{r}
+log_salary <- log(ageVSgender$Salary+1)
+
+```
+
+```{r}
+skewness(log_salary)
+```
+
+```{r}
+hist(log_salary)
+
+```
+
+```{r}
+encoded_gender <- model.matrix(~ ageVSgender$Gender - 1, ageVSgender)
+enco_gender <- as.data.frame(encoded_gender)
+gender <- c("Female", "Male")
+colnames(enco_gender) <- gender
+ageVSgender$Female <- c(enco_gender$Female)
+ageVSgender$Male <-c(enco_gender$Male)
+ageVSgender
+```
+
+```{r}
+ageVSgender
+```
