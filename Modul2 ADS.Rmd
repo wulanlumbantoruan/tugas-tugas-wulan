@@ -1,6 +1,6 @@
 ---
 title: "Modul 2 ADS"
-author: "Wulan Lumbantoruan"
+author: "Wulan"
 date: "2024-09-09"
 output: pdf_document
 ---
@@ -73,3 +73,4 @@ skewness(data_sales$`Total Profit`)
 library(moments)
 kurtosis(data_sales$`Total Profit`)
 ```
+
